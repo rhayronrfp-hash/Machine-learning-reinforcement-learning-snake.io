@@ -1,4 +1,4 @@
-# Machine-learning-reinforcement-learning-snake.io
+# NOT FINISHED Machine-learning-reinforcement-learning-snake.io
 My first project with an area of machine learning. 
 <h1>is a snake.io game using machine learning models (perhaps this is not the most appropriate way to say it, but it is the one I like to use it)</h1>
 

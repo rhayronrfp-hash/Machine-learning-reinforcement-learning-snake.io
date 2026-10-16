@@ -2,8 +2,12 @@ Machine-learning-reinforcement-learning-snake.io
 
 My first project with an area of machine learning.
 
-<h1>is a snake.io game using machine learning models (perhaps this is not the most appropriate way to say it, but it is the one I like to use it)</h1>Fully developed on a phone | width and height of the screen will have to be modified in the "funções.py"
-(I don't have a PC)
+It's a Snake.io game using machine learning models (perhaps this is not the most appropriate way to say it, but it is the one I like to use).
+
+Fully developed on a phone. The width and height of the screen will have to be modified in "funções.py".
+
+(I don't have a PC.)
+
 I hope you like it.
 
 What this is
@@ -12,21 +16,25 @@ There are several snakes in the game at once, all controlled by the same neural 
 
 Files
 
-Arquivo| O que faz
-"MAIN.py"| O loop do jogo: desenha a tela, lê o mouse/teclado, chama a IA a cada frame, dá as recompensas, cuida de morte e respawn.
-"funções.py"| O resto: criar cobra, mover cobra, os sensores de perigo, pra onde fica a comida, pra onde fica outra cobra, os contadores de estatística.
-"ML.py"| É só uma classe pequena que guarda o id da cobra e a conexão com o "Calculo_da_rede". Não tem lógica de rede aqui.
-"colisoes_wrapper.py"| Abre o programa "./calculo" e manda mensagem pra ele (é tudo texto, uma linha por mensagem).
-"calculo_ML.cpp"| Onde a rede neural de verdade mora (treino, memória, etc), além do cálculo de colisão entre as cobras. Precisa compilar esse arquivo antes de jogar.
-"melhor_ia.txt"| Os pesos da rede já treinados, salvos em arquivo. É gerado sozinho pelo jogo.
-"melhor_avaliacao.txt"| Guarda a melhor pontuação já alcançada, só pra saber quando vale a pena salvar um novo "melhor_ia.txt".
+File| What it does
+"MAIN.py"| The game loop: draws the screen, reads mouse/keyboard input, calls the AI every frame, gives rewards, and handles deaths and respawning.
+"funções.py"| Creates and moves snakes, handles danger sensors, finds food and other snakes, and manages statistics counters.
+"ML.py"| A small class that stores the snake's ID and the connection to "Calculo_da_rede". There is no neural network logic here.
+"colisoes_wrapper.py"| Opens the "./calculo" program and sends messages to it (everything is text, one line per message).
+"calculo_ML.cpp"| Contains the actual neural network (training, memory, etc.), as well as collision calculations between snakes. This file must be compiled before playing.
+"melhor_ia.txt"| Stores the trained network weights. It is generated automatically by the game.
+"melhor_avaliacao.txt"| Stores the highest score achieved so far, to determine when a new "melhor_ia.txt" should be saved.
 
 How to run
 
 g++ -std=c++17 -O3 calculo_ML.cpp -o calculo
 python3 MAIN.py
 
-The Eigen path is hardcoded in "calculo_ML.cpp" ("#include "/storage/emulated/0/eigen-3.4.0/Eigen/Dense""), because this was made on a phone, with Termux. Change that "#include" to wherever you have Eigen installed.
+The Eigen path is hardcoded in "calculo_ML.cpp":
+
+#include "/storage/emulated/0/eigen-3.4.0/Eigen/Dense"
+
+This was made on a phone, using Termux. Change that "#include" to wherever you have Eigen installed.
 
 Training from scratch, without the already-trained AI
 
@@ -35,9 +43,9 @@ The repo might come with an already-trained "melhor_ia.txt". If you want the AI 
 rm melhor_ia.txt
 python3 MAIN.py
 
-Without this file, the game can't load anything and creates fresh weights on its own, starting with epsilon at 1.0 (meaning it decides almost everything randomly at first). That's it: no "melhor_ia.txt", training starts from scratch.
+Without this file, the game can't load anything and creates fresh weights on its own, starting with epsilon at 1.0 (meaning it decides almost everything randomly at first). That's it: without "melhor_ia.txt", training starts from scratch.
 
-If you just want it to explore more again without losing what it already learned, use the "Epsilon" button in the game and set a manual value, instead of deleting the file.
+If you just want it to explore more again without losing what it already learned, use the Epsilon button in the game and set a manual value instead of deleting the file.
 
 Changing the sensors
 
@@ -63,7 +71,7 @@ A few RL things used here
 - Replay buffer: the game stores the latest experiences (what happened, which action was taken, what the reward was) and, when training, picks a random batch of these experiences instead of training only on the latest event.
 - Epsilon-greedy: from time to time (with probability "epsilon"), the snake takes a random action instead of obeying the network, just to keep exploring the game. This "epsilon" gradually decreases and is saved along with the weights.
 - Proximity reward: in addition to earning points for eating and losing points for dying, the snake also gets a little reward just for getting closer to food or another snake, to help it learn faster.
-- Evaluation mode: the "Avaliação" button turns off randomness and training, just to see how the AI is really playing, without interference.
+- Evaluation mode: the Avaliação button turns off randomness and training, just to see how the AI is really playing, without interference.
 
 One note
 
@@ -73,42 +81,52 @@ I didn't use any ready-made RL framework (no Gym, Stable-Baselines, PyTorch) —
 
 Versão em português
 
-<h1>Meu primeiro projeto com uma área de aprendizado de máquina. É um jogo Snake.io que está usando modelos de aprendizado de máquina</h1>Totalmente desenvolvido em um celular | largura e altura da tela terão que ser modificadas no "funções.py"
-(Eu não tenho um PC)
+Meu primeiro projeto com uma área de aprendizado de máquina.
+
+É um jogo Snake.io que está usando modelos de aprendizado de máquina (talvez essa não seja a maneira mais apropriada de dizer isso, mas é a que eu gosto de usar).
+
+Totalmente desenvolvido em um celular. A largura e a altura da tela terão que ser modificadas em "funções.py".
+
+(Eu não tenho um PC.)
+
 Espero que gostem.
 
 O que é isso
 
-Tem várias cobras no jogo ao mesmo tempo, e todas são controladas pela mesma rede neural (uma só, compartilhada entre todas), que vai aprendendo enquanto o jogo roda. A parte do jogo em si (desenhar na tela, mexer as cobras, ver quem bateu em quem) é em Python com "pygame". A parte da rede neural e do treino é em C++ com a biblioteca Eigen, rodando separado e conversando com o Python por "stdin"/"stdout".
+Tem várias cobras no jogo ao mesmo tempo, e todas são controladas pela mesma rede neural (uma só, compartilhada entre todas), que vai aprendendo enquanto o jogo roda. A parte do jogo em si (desenhar na tela, mexer as cobras, ver quem bateu em quem) é em Python com "pygame". A parte da rede neural e do treino é em C++ com a biblioteca Eigen, rodando separada e conversando com o Python por "stdin"/"stdout".
 
 Arquivos
 
 Arquivo| O que faz
-"MAIN.py"| O loop do jogo: desenha a tela, lê o mouse/teclado, chama a IA a cada frame, dá as recompensas, cuida de morte e respawn.
-"funções.py"| O resto: criar cobra, mover cobra, os sensores de perigo, pra onde fica a comida, pra onde fica outra cobra, os contadores de estatística.
-"ML.py"| É só uma classe pequena que guarda o id da cobra e a conexão com o "Calculo_da_rede". Não tem lógica de rede aqui.
-"colisoes_wrapper.py"| Abre o programa "./calculo" e manda mensagem pra ele (é tudo texto, uma linha por mensagem).
-"calculo_ML.cpp"| Onde a rede neural de verdade mora (treino, memória, etc), além do cálculo de colisão entre as cobras. Precisa compilar esse arquivo antes de jogar.
-"melhor_ia.txt"| Os pesos da rede já treinados, salvos em arquivo. É gerado sozinho pelo jogo.
-"melhor_avaliacao.txt"| Guarda a melhor pontuação já alcançada, só pra saber quando vale a pena salvar um novo "melhor_ia.txt".
+"MAIN.py"| O loop do jogo: desenha a tela, lê o mouse/teclado, chama a IA a cada frame, dá as recompensas e cuida das mortes e dos respawns.
+"funções.py"| Cria e move as cobras, cuida dos sensores de perigo, encontra a comida e outras cobras e gerencia os contadores de estatísticas.
+"ML.py"| Uma classe pequena que guarda o ID da cobra e a conexão com "Calculo_da_rede". Não há lógica da rede neural aqui.
+"colisoes_wrapper.py"| Abre o programa "./calculo" e envia mensagens para ele (tudo é texto, uma linha por mensagem).
+"calculo_ML.cpp"| Contém a rede neural propriamente dita (treinamento, memória etc.), além dos cálculos de colisão entre as cobras. Esse arquivo precisa ser compilado antes de jogar.
+"melhor_ia.txt"| Armazena os pesos treinados da rede. É gerado automaticamente pelo jogo.
+"melhor_avaliacao.txt"| Guarda a maior pontuação alcançada até agora, para determinar quando vale a pena salvar um novo "melhor_ia.txt".
 
 Como rodar
 
 g++ -std=c++17 -O3 calculo_ML.cpp -o calculo
 python3 MAIN.py
 
-O caminho do Eigen tá fixo no "calculo_ML.cpp" ("#include "/storage/emulated/0/eigen-3.4.0/Eigen/Dense""), porque isso aqui foi feito no celular, no Termux. Troca de #include pro caminho de onde você tiver o Eigen.
+O caminho do Eigen tá fixo no "calculo_ML.cpp":
+
+#include "/storage/emulated/0/eigen-3.4.0/Eigen/Dense"
+
+Isso aqui foi feito no celular, usando Termux. Troque esse "#include" pelo caminho de onde você tiver o Eigen instalado.
 
 Pra treinar do zero, sem usar a IA já treinada
 
-Pode ser que o repositório venha com um melhor_ia.txt já treinado. Se você quiser que a IA comece do nada (pesos aleatórios, agindo quase tudo por sorte no começo), é só apagar esse arquivo antes de rodar:
+Pode ser que o repositório venha com um "melhor_ia.txt" já treinado. Se você quiser que a IA comece do nada (pesos aleatórios, agindo quase tudo por sorte no começo), é só apagar esse arquivo antes de rodar:
 
 rm melhor_ia.txt
 python3 MAIN.py
 
 Sem esse arquivo, o jogo não consegue carregar nada e cria pesos novos sozinho, começando com epsilon em 1.0 (ou seja, no início ela decide quase tudo na sorte). É basicamente isso: sem o "melhor_ia.txt", o treino começa do zero.
 
-Se você só quer que ela volte a explorar mais, sem perder o que já aprendeu, usa o botão "Epsilon" dentro do jogo e põe um valor manual, em vez de apagar o arquivo.
+Se você só quer que ela volte a explorar mais, sem perder o que já aprendeu, usa o botão Epsilon dentro do jogo e põe um valor manual, em vez de apagar o arquivo.
 
 Mexendo nos sensores
 
@@ -132,9 +150,9 @@ Umas coisas de reinforcement learning que tem aqui
 - Double DQN: uma rede escolhe a ação, outra rede (uma cópia mais antiga) avalia se essa escolha foi boa. Isso evita que a IA fique superestimando o próprio valor.
 - Target network: é essa cópia mais antiga dos pesos, que só atualiza de tempos em tempos (a cada "contadormax" passos de treino), pra deixar o treino mais estável.
 - Replay buffer: o jogo guarda as últimas experiências (o que aconteceu, que ação foi tomada, qual foi a recompensa) e, na hora de treinar, pega um punhado aleatório dessas experiências em vez de treinar só com a última coisa que aconteceu.
-- Epsilon-greedy: de vez em quando (com chance "epsilon") a cobra faz uma ação aleatória em vez de obedecer a rede, só pra continuar explorando o jogo. Esse "epsilon" vai diminuindo aos poucos e fica salvo junto com os pesos.
+- Epsilon-greedy: de vez em quando (com chance "epsilon"), a cobra faz uma ação aleatória em vez de obedecer a rede, só pra continuar explorando o jogo. Esse "epsilon" vai diminuindo aos poucos e fica salvo junto com os pesos.
 - Recompensa por aproximação: além de ganhar pontos por comer e perder por morrer, a cobra também ganha um pouco de recompensa só por chegar mais perto da comida ou de outra cobra, pra ajudar ela a aprender mais rápido.
-- Modo avaliação: o botão "Avaliação" desliga a aleatoriedade e o treino, só pra ver como a IA realmente está jogando, sem interferência.
+- Modo avaliação: o botão Avaliação desliga a aleatoriedade e o treino, só pra ver como a IA realmente está jogando, sem interferência.
 
 Uma observação
 
